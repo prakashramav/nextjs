@@ -1,5 +1,5 @@
 import React from 'react'
-
+// import Views from '@components/Views'
 const  Comments = async ({params}) => {
     const paramsObj = await params
     console.log(paramsObj);
@@ -7,6 +7,7 @@ const  Comments = async ({params}) => {
   return (
     <div>
       <p>All Comments on <b>{blogID}</b> page </p>
+      {/* <Views /> */}
     </div>
   )
 }

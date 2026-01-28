@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Post from './post/page';
 
 export default function Home() {
   return (
@@ -13,6 +14,9 @@ export default function Home() {
         </p>
         <p>
         <Link href='/services'>Services</Link>
+        </p>
+        <p>
+          <Link href='/files'>Files</Link>
         </p>
       </div>
     </>

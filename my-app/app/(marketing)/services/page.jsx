@@ -6,7 +6,10 @@ const Services = () => {
         <h1>
             Services Page
         </h1>
-        <Link href="/">Home</Link> {' '} <Link href='/about'>About</Link>
+        <p>
+        <Link href="/services/web-services">web services</Link>
+        </p>
+        <p> <Link href='/services/seo'>seo service</Link> </p>
     </div>
   )
 }
