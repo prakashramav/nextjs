@@ -1,17 +1,12 @@
 [
-    {
-        "id": 1,
-        "text": "Learn Next.js 15",
-        "completed": false
-    },
-    {
-        "id": 2,
-        "text": "Master Node.js",
-        "completed": true
-    },
-    {
-        "id": 3,
-        "text": "Learn MongoDB",
-        "completed": true
-    }
+  {
+    "id": "82d8e8ec-6d07-497e-b8da-7cf63e245127",
+    "text": "Complete React",
+    "completed": false
+  },
+  {
+    "id": "8efa7e8b-a9b2-4779-9131-6070ed2f8f3f",
+    "text": "Buy Groceries",
+    "completed": false
+  }
 ]
