@@ -7,7 +7,7 @@ import {useTheme} from "@/context/ThemeContext";
 
 const Header = () => {
     const {isDark, toggleTheme} = useTheme();
-    console.log(isDark)
+    //console.log(isDark)
   const pathname = usePathname();
 
   const linkClass = (path) =>

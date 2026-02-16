@@ -5,6 +5,7 @@ import { useTheme } from "@/context/ThemeContext"
 const ThemeWrapper = ({children}) => {
 
     const {isDark} = useTheme();
+    // console.log(object)
     
     return(
         <div
