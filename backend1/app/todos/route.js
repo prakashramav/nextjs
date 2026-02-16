@@ -1,8 +1,10 @@
 import { writeFile } from 'fs/promises'
 import todos from '../../todos.json'
-export function GET(request){
-    // console.log(request)
-    return  Response.json(todos)
+import { readFile } from 'fs/promises';
+export async function GET(){
+    const todoJSONString = await readFile("./todos.json","utf-8");
+    const todos = JSON.parse(todoJSONString)
+    return Response.json(todos)
 }
 export async function POST(request){
     const todo = await request.json()

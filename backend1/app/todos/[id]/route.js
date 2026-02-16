@@ -4,7 +4,7 @@ import { writeFile } from 'fs/promises'
 export async function GET(_, {params}){
     const {id} = await params
     // console.log(a);
-    const todo = todosData.find((todo) => id === todo.id)
+    const todo = todos.find((todo) => id === todo.id)
     // console.log(context);
     if(!todo){
         return Response.json({error: "Todo not found"},{
