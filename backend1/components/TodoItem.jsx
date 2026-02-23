@@ -39,7 +39,7 @@ const TodoItem = ({ todo, deleteTodo, toggleTodo, updateTodo }) => {
       <div className="flex items-center gap-3">
         <button
           onClick={() => toggleTodo(todo.id)}
-          className={`flex justify-center items-center flex-shrink-0 w-5 h-5 rounded-md border transition-colors ${
+          className={`flex justify-center items-center flex-shrink- w-5 h-5 rounded-md border transition-colors ${
             todo.completed
               ? "bg-primary border-primary"
               : "border-muted-foreground hover:border-primary"
