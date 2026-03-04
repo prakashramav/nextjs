@@ -6,6 +6,7 @@ import TodoForm from "@/components/TodoForm";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon, UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { logoutUser } from "./actions/userActions";
 
 export default function Home() {
   const router = useRouter();
@@ -97,10 +98,8 @@ export default function Home() {
   };
 
   const handleLogout = async () => {
-    const response = await fetch(`/api/logout`, {
-      method: "POST",
-    });
-    if (response.status === 204) {
+    const response = await logoutUser();
+    if (response.success) {
       return router.push("/login");
     }
   };
