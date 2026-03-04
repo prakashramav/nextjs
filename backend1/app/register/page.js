@@ -1,28 +1,46 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { registerUser } from "../actions/userActions";
+import { registerSchema } from "@/lib/userSchema";
+import {z} from "zod/v4";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const [state, formAction, isPending] = useActionState(registerUser, {});
+
   const [name, setName] = useState("ProCodrr");
   const [email, setEmail] = useState("procodrr@gmail.com");
-  const [password, setPassword] = useState("123456");
-  const [error, setErrot] = useState("");
+  const [password, setPassword] = useState("Arjun@1211");
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    const response = await fetch("/api/register", {
-      method: "POST",
-      body: JSON.stringify({ name, email, password }),
-    });
-    const data = await response.json();
-    console.log(data);
-    if (!data.error) {
-      return router.push("/login");
+  const [errors, setErrors] = useState({});
+  useEffect(() => {
+    if(state.success){
+      router.push("/login");
+      // console.log(state.message);
     }
-    setErrot(data.error);
+    else{
+      setErrors(state.errors);
+    }
+  }, [state]);
+
+
+  const handleFormAction = async () => {
+
+    const{success, data, error} = registerSchema.safeParse({
+      name,
+      email,
+      password
+    })
+    // console.log(result);
+
+    if(!success){
+      return setErrors(z.flattenError(error).fieldErrors)
+    }
+    setErrors({});
+    formAction(data);
   };
 
   return (
@@ -34,7 +52,7 @@ export default function RegisterPage() {
           </h1>
         </header>
         <h2 className="text-2xl font-semibold mb-4">Register</h2>
-        <form onSubmit={handleRegister} className="space-y-4">
+        <form action={handleFormAction} className="space-y-4" noValidate>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Name
@@ -43,9 +61,11 @@ export default function RegisterPage() {
               type="text"
               className="mt-1 w-full px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white"
               value={name}
+              name="name"
               onChange={(e) => setName(e.target.value)}
               required
             />
+            <p className="text-xs text-red-500 -mb-2">{errors?.name}</p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -53,11 +73,13 @@ export default function RegisterPage() {
             </label>
             <input
               type="email"
+              name="email"
               className="mt-1 w-full px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+            <p className="text-xs text-red-500 -mb-2">{errors?.email}</p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -65,15 +87,21 @@ export default function RegisterPage() {
             </label>
             <input
               type="password"
+              name="password"
               className="mt-1 w-full px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <p className="text-xs text-red-500 -mb-2">{errors?.password}</p>
           </div>
+          <p className="text-xs text-green-500">{state.message}</p>
+          <p className="text-xs text-red-500">{state.error}</p>
+
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-md font-medium hover:opacity-90"
+            className="w-full bg-gradient-to-r mt-2 from-blue-500 to-purple-600 text-white py-2 rounded-md font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isPending}
           >
             Register
           </button>
@@ -84,7 +112,6 @@ export default function RegisterPage() {
             Login
           </Link>
         </p>
-        <p className="mt-2 text-center text-sm text-red-600 dark:text-red-400">{error}</p>
       </div>
     </div>
   );
